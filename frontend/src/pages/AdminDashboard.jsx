@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import api from "../services/api";
+import "../styles/AdminDashboard.css";
+
+const getYouTubeVideoId = (url) => {
+  if (!url) return null;
+  const regExp = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\\s]{11})/;
+  const match = url.match(regExp);
+  return match ? match[1] : null;
+};
 
 export default function AdminDashboard({ onLogout }) {
   const [title, setTitle] = useState("");
@@ -11,6 +19,7 @@ export default function AdminDashboard({ onLogout }) {
   const [media, setMedia] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [mediaPreview, setMediaPreview] = useState(null);
+  const [youtubeUrl, setYoutubeUrl] = useState("");
 
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState("");
@@ -61,25 +70,27 @@ export default function AdminDashboard({ onLogout }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Client-side validation
+    if (!title || !title.trim()) {
+      alert('Title is required. Please add a title before submitting.');
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("content", content);
       formData.append("category", category);
       formData.append("featured", featured ? "true" : "false");
+      if (youtubeUrl.trim()) formData.append("youtubeUrl", youtubeUrl);
       if (image) formData.append("image", image);
       if (media) formData.append("media", media);
 
       if (editingPost) {
-        await api.put(`/api/posts/${editingPost._id}`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        await api.put(`/api/posts/${editingPost._id}`, formData);
         alert("✅ Post updated successfully!");
         setEditingPost(null);
       } else {
-        await api.post("/api/posts", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        await api.post("/api/posts", formData);
         alert("✅ Post created successfully!");
       }
 
@@ -92,11 +103,13 @@ export default function AdminDashboard({ onLogout }) {
       setMedia(null);
       setImagePreview(null);
       setMediaPreview(null);
+      setYoutubeUrl("");
 
       fetchPosts();
     } catch (err) {
-      console.error("Error saving post:", err.response?.data || err.message);
-      alert("❌ Failed to save post.");
+      const serverMsg = err.response?.data?.message || err.response?.data || err.message;
+      console.error("Error saving post:", serverMsg);
+      alert(`❌ Failed to save post: ${serverMsg}`);
     }
   };
 
@@ -120,6 +133,7 @@ export default function AdminDashboard({ onLogout }) {
     setFeatured(post.featured);
     setImagePreview(post.featuredImage || null);
     setMediaPreview(post.fileUrl || null);
+    setYoutubeUrl(post.youtubeUrl || "");
     setImage(null);
     setMedia(null);
   };
@@ -152,16 +166,20 @@ export default function AdminDashboard({ onLogout }) {
   };
 
   return (
-    <div className="admin-dashboard">
-      <div className="container mt-4">
+    <div className="admin-dashboard bg-dark text-white">
+      <div className="container-fluid py-4">
         {/* Header */}
-        <div className="d-flex justify-content-between align-items-center mb-4">
+        <div className="d-flex justify-content-between align-items-center mb-4 bg-gradient p-4 rounded-3">
           <div>
-            <h2 className="mb-0">Admin Dashboard</h2>
-            <small className="text-muted">Manage posts, media and categories</small>
+            <h2 className="mb-0 text-white">Producer Dashboard</h2>
+            <small className="text-light">Manage your beats, music, videos, and more</small>
           </div>
           <div className="d-flex align-items-center gap-3">
-            <button className="btn btn-outline-secondary" onClick={fetchPosts} disabled={loading}>
+            <div className="text-end me-3">
+              <div className="small text-light">Total Content</div>
+              <div className="fs-4 fw-bold text-white">{posts.length}</div>
+            </div>
+            <button className="btn btn-outline-light" onClick={fetchPosts} disabled={loading}>
               {loading ? "Refreshing..." : "Refresh"}
             </button>
             <button className="btn btn-danger" onClick={onLogout}>
@@ -209,10 +227,12 @@ export default function AdminDashboard({ onLogout }) {
                       onChange={(e) => setCategory(e.target.value)}
                       className="form-select"
                     >
-                      <option value="news">News</option>
+                      <option value="beats">Beats</option>
                       <option value="music">Music</option>
-                      <option value="video">Video</option>
-                      <option value="blog">Blog</option>
+                      <option value="videos">Videos</option>
+                      <option value="mods">Mods</option>
+                      <option value="news">News</option>
+                      <option value="tutorials">Tutorials</option>
                     </select>
 
                     <div className="form-check d-flex align-items-center ms-2">
@@ -282,6 +302,15 @@ export default function AdminDashboard({ onLogout }) {
                     )}
                   </div>
 
+                  {/* YouTube URL Input */}
+                  <input
+                    type="url"
+                    placeholder="YouTube URL (optional)"
+                    value={youtubeUrl}
+                    onChange={(e) => setYoutubeUrl(e.target.value)}
+                    className="form-control mb-3"
+                  />
+
                   <div className="d-grid gap-2">
                     <button type="submit" className="btn btn-primary btn-lg">
                       {editingPost ? "Update Post" : "Create Post"}
@@ -321,7 +350,7 @@ export default function AdminDashboard({ onLogout }) {
               {filteredPosts.length > 0 ? (
                 filteredPosts.map((post) => (
                   <div key={post._id} className="col">
-                    <div className="card h-100 shadow-sm border-0 rounded-3">
+                    <div className="card h-100 shadow-sm border-0 rounded-3 bg-dark text-white">
                       {post.featuredImage && (
                         <div style={{ height: "160px", overflow: "hidden", borderTopLeftRadius: ".75rem", borderTopRightRadius: ".75rem" }}>
                           <img
@@ -333,10 +362,10 @@ export default function AdminDashboard({ onLogout }) {
                         </div>
                       )}
                       <div className="card-body d-flex flex-column">
-                        <h6 className="card-title fw-bold text-truncate" title={post.title}>
+                        <h6 className="card-title fw-bold text-truncate text-white" title={post.title}>
                           {post.title}
                         </h6>
-                        <p className="card-text text-muted small mb-2" style={{ maxHeight: "56px", overflow: "hidden" }}>
+                        <p className="card-text text-light small mb-2" style={{ maxHeight: "56px", overflow: "hidden" }}>
                           {post.content}
                         </p>
 
@@ -355,6 +384,19 @@ export default function AdminDashboard({ onLogout }) {
                           <video controls className="w-100 mb-2" style={{ maxHeight: "180px" }}>
                             <source src={post.fileUrl} />
                           </video>
+                        )}
+                        {post.youtubeUrl && (
+                          <div className="mb-2">
+                            <div className="ratio ratio-16x9">
+                              <iframe
+                                src={`https://www.youtube.com/embed/${getYouTubeVideoId(post.youtubeUrl)}`}
+                                title="YouTube video"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              ></iframe>
+                            </div>
+                          </div>
                         )}
 
                         <div className="mt-auto d-flex justify-content-between align-items-center">

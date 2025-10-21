@@ -25,10 +25,37 @@ const uploadToCloudinary = (fileBuffer, folder, resource_type = "image") =>
     streamifier.createReadStream(fileBuffer).pipe(stream);
   });
 
+// Helper: Generate slug from title
+const generateSlug = (title) => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single
+    .trim();
+};
+
+// Ensure slug is unique by appending a suffix if needed
+const ensureUniqueSlug = async (baseSlug) => {
+  if (!baseSlug) {
+    baseSlug = `post-${Date.now().toString(36)}`;
+  }
+  let slug = baseSlug;
+  let counter = 0;
+  // Keep trying until we find an unused slug
+  while (await Post.findOne({ slug })) {
+    counter += 1;
+    slug = `${baseSlug}-${counter}`;
+    // safety: avoid infinite loop
+    if (counter > 1000) break;
+  }
+  return slug;
+};
+
 // Create Post
 export const createPost = async (req, res) => {
   try {
-    const { title, content, category, featured, tags } = req.body;
+    const { title, content, category, featured, tags, youtubeUrl } = req.body;
 
     if (!req.user) {
       return res.status(401).json({ message: "Unauthorized, login first" });
@@ -36,6 +63,18 @@ export const createPost = async (req, res) => {
 
     let featuredImage = "";
     let fileUrl = "";
+    // Validate title
+    if (!title || !title.toString().trim()) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+
+    // Generate slug and ensure it's unique and non-empty
+    let baseSlug = generateSlug(title.toString());
+    if (!baseSlug) {
+      // fallback for titles that generate empty slugs (e.g. non-latin chars)
+      baseSlug = `post-${Date.now().toString(36)}`;
+    }
+    const slug = await ensureUniqueSlug(baseSlug);
 
     if (req.files?.image) {
       const result = await uploadToCloudinary(
@@ -57,12 +96,14 @@ export const createPost = async (req, res) => {
 
     const post = await Post.create({
       title,
+      slug,
       content,
       category,
       featured: featured === "true",
       tags: tags?.split(",").map(t => t.trim()), // ✅ tag support
       featuredImage,
       fileUrl,
+      youtubeUrl,
       author: req.user._id,
     });
 
@@ -125,6 +166,17 @@ export const getTags = async (req, res) => {
   }
 };
 
+// Get single post by slug
+export const getPostBySlug = async (req, res) => {
+  try {
+    const post = await Post.findOne({ slug: req.params.slug }).populate("author", "name");
+    post ? res.json(post) : res.status(404).json({ message: "Post not found" });
+  } catch (error) {
+    console.error("Get Post By Slug Error:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Get single post
 export const getPostById = async (req, res) => {
   try {
@@ -142,7 +194,14 @@ export const updatePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    const { title, content, category, featured, tags } = req.body;
+    const { title, content, category, featured, tags, youtubeUrl } = req.body;
+
+    if (title && title !== post.title) {
+      // regenerate slug and ensure uniqueness
+      let baseSlug = generateSlug(title.toString());
+      if (!baseSlug) baseSlug = `post-${Date.now().toString(36)}`;
+      post.slug = await ensureUniqueSlug(baseSlug);
+    }
 
     post.title = title || post.title;
     post.content = content || post.content;
@@ -150,6 +209,9 @@ export const updatePost = async (req, res) => {
     post.featured =
       featured !== undefined ? featured === "true" : post.featured;
     post.tags = tags ? tags.split(",").map(t => t.trim()) : post.tags; // ✅ tag support
+    if (youtubeUrl !== undefined && youtubeUrl.trim()) {
+      post.youtubeUrl = youtubeUrl;
+    }
 
     if (req.files?.image) {
       const result = await uploadToCloudinary(

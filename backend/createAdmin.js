@@ -19,8 +19,8 @@ const connectDB = async () => {
 
 const createAdmin = async () => {
   try {
-    const email = "djkamsiza@gmail.com";
-    const plainPassword = "bigtalent1"; // default password
+    const email = "callmeyoungben@gmail.com";
+    const plainPassword = "Ben@1998"; // default password
 
     let admin = await User.findOne({ email });
 

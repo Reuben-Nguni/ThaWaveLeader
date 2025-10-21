@@ -51,7 +51,7 @@ export default function Loading() {
       }}
     >
       <img
-        src="/src/assets/logo.jpg"
+        src="/logo.jpg"
         alt="Favicon"
         style={{
           width: '80px',
@@ -59,7 +59,7 @@ export default function Loading() {
           marginBottom: '20px',
         }}
       />
-      <h2 style={{ color: '#333', marginBottom: '20px' }}>PAGE LOADING</h2>
+      <h2 style={{ color: '#333', marginBottom: '20px' }}>Loading...please wait!!!!</h2>
       <div
         className="spinner-border text-primary"
         role="status"

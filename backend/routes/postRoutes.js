@@ -3,6 +3,7 @@ import {
   createPost,
   getPosts,
   getPostById,
+  getPostBySlug,
   updatePost,
   deletePost,
   getCategories, // ✅ added
@@ -17,6 +18,7 @@ const upload = multer(); // in-memory storage
 router.post("/", protect, upload.fields([{ name: "image" }, { name: "media" }]), createPost);
 router.get("/", getPosts);
 router.get("/categories", getCategories); // ✅ added
+router.get("/slug/:slug", getPostBySlug);
 router.get("/:id", getPostById);
 router.put("/:id", protect, upload.fields([{ name: "image" }, { name: "media" }]), updatePost);
 router.delete("/:id", protect, deletePost);

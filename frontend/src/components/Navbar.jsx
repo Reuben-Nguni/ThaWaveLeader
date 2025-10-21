@@ -16,23 +16,23 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top">
-      <div className="container-fluid d-flex justify-content-between align-items-center px-3">
-        {/* Brand */}
-        <Link to="/" className="navbar-brand d-flex align-items-center" onClick={closeMenu}>
-          <img
-            src={logo}
-            alt="New Generation Music Logo"
-            style={{
-              width: "40px",
-              height: "40px",
-              objectFit: "cover",
-              borderRadius: "4px",
-              marginRight: "10px",
-            }}
-          />
-          <span className="fw-bold fs-5">New Generation Music</span>
-        </Link>
+      <nav className="navbar navbar-expand-lg bg-white shadow-sm fixed-top">
+        <div className="container-fluid d-flex justify-content-between align-items-center px-3">
+          {/* Brand */}
+          <Link to="/" className="navbar-brand d-flex align-items-center" onClick={closeMenu}>
+            <img
+              src={logo}
+              alt="BenThaWav Logo"
+              style={{
+                width: "40px",
+                height: "40px",
+                objectFit: "cover",
+                borderRadius: "4px",
+                marginRight: "10px",
+              }}
+            />
+            <span className="fw-bold fs-5 text-primary">BenThaWaveLeader</span>
+          </Link>
 
         {/* Toggle Button for Mobile */}
         {isMobile && (
@@ -62,16 +62,21 @@ export default function Navbar() {
           <div className="offcanvas-body">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={closeMenu}>Home</Link>
+                  <Link className="nav-link text-dark" to="/" onClick={closeMenu}>Home</Link>
+              </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/beats" onClick={closeMenu}>
+                    <i className="bi bi-music-note-beamed me-1"></i>Beats
+                  </Link>
+                </li>
+              <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/blog" onClick={closeMenu}>Blog</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/blog" onClick={closeMenu}>Blog</Link>
+                  <Link className="nav-link text-dark" to="/news" onClick={closeMenu}>News</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/news" onClick={closeMenu}>News</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/about" onClick={closeMenu}>About</Link>
+                  <Link className="nav-link text-dark" to="/about" onClick={closeMenu}>About</Link>
               </li>
             </ul>
           </div>
@@ -81,16 +86,21 @@ export default function Navbar() {
         <div className="container-fluid">
           <ul className="navbar-nav ms-auto d-flex flex-row gap-3">
             <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
+                <Link className="nav-link text-dark" to="/">Home</Link>
+            </li>
+              <li className="nav-item">
+                <Link className="nav-link text-dark" to="/beats">
+                  <i className="bi bi-music-note-beamed me-1"></i>Beats
+                </Link>
+              </li>
+            <li className="nav-item">
+                <Link className="nav-link text-dark" to="/blog">Blog</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/blog">Blog</Link>
+                <Link className="nav-link text-dark" to="/news">News</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/news">News</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/about">About</Link>
+                <Link className="nav-link text-dark" to="/about">About</Link>
             </li>
           </ul>
         </div>

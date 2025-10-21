@@ -8,6 +8,8 @@ import News from "./pages/News";
 import About from "./pages/About";
 import AdminLogin from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
+import Beats from "./pages/Beats";
+import Videos from "./pages/Videos";
 import PostDetail from "./pages/PostDetail";
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
+  <Route path="/beats" element={<Beats />} />
+  <Route path="/videos" element={<Videos />} />
         <Route path="/news" element={<News />} />
         <Route path="/about" element={<About />} />
         <Route path="/post/:id" element={<PostDetail />} />

@@ -3,6 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { FaUser, FaCalendarAlt, FaDownload, FaArrowLeft, FaShareAlt, FaFacebook, FaTwitter, FaWhatsapp } from "react-icons/fa";
 
+const getYouTubeVideoId = (url) => {
+  if (!url) return null;
+  const regExp = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\\s]{11})/;
+  const match = url.match(regExp);
+  return match ? match[1] : null;
+};
+
 export default function PostDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -55,8 +62,41 @@ export default function PostDetail() {
     minute: "2-digit",
   });
 
-  const isAudio = post.fileUrl?.match(/\.(mp3|wav|ogg)$/i);
-  const isVideo = post.fileUrl?.match(/\.(mp4|mov|webm)$/i);
+  // Better media detection: check extension OR Cloudinary path segments (e.g. /video/ or /audio/)
+  const fileUrl = post.fileUrl;
+  const hasVideoExt = fileUrl?.match(/\.(mp4|mov|webm|m4v|ogg)(\?.*)?$/i);
+  const hasAudioExt = fileUrl?.match(/\.(mp3|wav|ogg|m4a)(\?.*)?$/i);
+  const isVideo = Boolean(hasVideoExt) || (fileUrl && fileUrl.includes("/video/"));
+  const isAudio = Boolean(hasAudioExt) || (fileUrl && fileUrl.includes("/audio/"));
+
+  // Map extension to a reasonable mime-type for <source>
+  const getMimeType = (url) => {
+    if (!url) return null;
+    const extMatch = url.match(/\.([a-z0-9]+)(?:\?|$)/i);
+    const ext = extMatch ? extMatch[1].toLowerCase() : null;
+    switch (ext) {
+      case "mp4":
+      case "m4v":
+        return "video/mp4";
+      case "webm":
+        return "video/webm";
+      case "mov":
+        return "video/quicktime";
+      case "mp3":
+        return "audio/mpeg";
+      case "wav":
+        return "audio/wav";
+      case "ogg":
+        return "audio/ogg";
+      case "m4a":
+        return "audio/mp4";
+      default:
+        // Fallbacks: if URL looks like Cloudinary video resource, assume MP4
+        if (url.includes("/video/")) return "video/mp4";
+        if (url.includes("/image/")) return "image/*";
+        return null;
+    }
+  };
 
   return (
     <>
@@ -110,26 +150,43 @@ export default function PostDetail() {
               )}
             </div>
 
-            {post.fileUrl && (
+            {(post.fileUrl || post.youtubeUrl) && (
               <div className="card p-3 mb-4">
                 <h6>Media</h6>
+                {post.youtubeUrl && getYouTubeVideoId(post.youtubeUrl) && (
+                  <div className="mb-3">
+                    <div className="ratio ratio-16x9">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${getYouTubeVideoId(post.youtubeUrl)}`}
+                        title="YouTube video"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  </div>
+                )}
                 {isAudio && (
                   <audio controls className="w-100 mb-3">
-                    <source src={post.fileUrl} type="audio/mpeg" />
+                    <source src={fileUrl} type={getMimeType(fileUrl) || "audio/mpeg"} />
+                    Your browser does not support the audio element.
                   </audio>
                 )}
                 {isVideo && (
                   <video controls className="w-100 mb-3" style={{ maxHeight: 300 }}>
-                    <source src={post.fileUrl} type="video/mp4" />
+                    <source src={fileUrl} type={getMimeType(fileUrl) || "video/mp4"} />
+                    Your browser does not support the video tag.
                   </video>
                 )}
-                <a
-                  href={post.fileUrl}
-                  download
-                  className="btn btn-outline-primary w-100"
-                >
-                  <FaDownload className="me-2" /> Download File
-                </a>
+                {post.fileUrl && (
+                  <a
+                    href={post.fileUrl}
+                    download
+                    className="btn btn-outline-primary w-100"
+                  >
+                    <FaDownload className="me-2" /> Download File
+                  </a>
+                )}
               </div>
             )}
           </div>

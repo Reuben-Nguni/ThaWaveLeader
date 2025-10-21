@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const postSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
     content: { type: String, required: true },
 
     // Broad category for filtering (e.g. Music, News, Video)
@@ -20,6 +21,7 @@ const postSchema = new mongoose.Schema(
     // Media assets
     featuredImage: { type: String }, // Cloudinary image
     fileUrl: { type: String },       // Cloudinary media (audio/video)
+    youtubeUrl: { type: String },    // YouTube video URL
 
     // Author reference
     author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },

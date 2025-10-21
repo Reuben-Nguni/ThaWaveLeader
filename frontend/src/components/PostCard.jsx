@@ -15,13 +15,11 @@ export default function PostCard({ post }) {
     minute: "2-digit",
   });
 
-
-
   return (
     <>
       {/* Card */}
       <div
-        className="card shadow-sm"
+        className="card shadow-sm colorful-card"
         style={{
           width: "260px",
           flex: "0 0 auto",
@@ -31,6 +29,7 @@ export default function PostCard({ post }) {
           marginBottom: "15px",
           height: "420px",
           cursor: "pointer",
+         
         }}
         onClick={() => navigate(`/post/${post._id}`)}
         role="button"
