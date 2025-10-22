@@ -18,7 +18,7 @@ export default function Navbar() {
   }, []);
 
   return (
-      <nav className="navbar navbar-expand-lg bg-white shadow-sm fixed-top">
+      <nav className="navbar navbar-expand-lg shadow-sm fixed-top" style={{ backgroundColor: 'var(--navbar-bg)' }}>
         <div className="container-fluid d-flex justify-content-between align-items-center px-3">
           {/* Brand */}
           <Link to="/" className="navbar-brand d-flex align-items-center" onClick={closeMenu}>
@@ -33,7 +33,7 @@ export default function Navbar() {
                 marginRight: "10px",
               }}
             />
-            <span className="fw-bold fs-5 text-primary">BenThaWaveLeader</span>
+            <span className="fw-bold fs-5 text-primary d-none d-sm-inline">BenThaWaveLeader</span>
           </Link>
 
         {/* Toggle Button for Mobile */}
@@ -64,32 +64,32 @@ export default function Navbar() {
       {/* Drawer for Mobile */}
       {isMobile ? (
         <div
-          className={`offcanvas offcanvas-end text-bg-dark ${isOpen ? "show" : ""}`}
+          className={`offcanvas offcanvas-end ${theme === 'dark' ? 'text-bg-dark' : 'bg-white text-dark'} ${isOpen ? "show" : ""}`}
           tabIndex="-1"
           style={{ visibility: isOpen ? "visible" : "hidden" }}
         >
           <div className="offcanvas-header">
-            <h5 className="offcanvas-title">Menu</h5>
+            <h5 className="offcanvas-title" style={{ color: 'var(--text-color)' }}>Menu</h5>
             <button type="button" className="btn-close btn-close-white" onClick={closeMenu}></button>
           </div>
           <div className="offcanvas-body">
             <ul className="navbar-nav">
               <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/" onClick={closeMenu}>Home</Link>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/" onClick={closeMenu}>Home</Link>
               </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/beats" onClick={closeMenu}>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/beats" onClick={closeMenu}>
                     <i className="bi bi-music-note-beamed me-1"></i>Beats
                   </Link>
                 </li>
               <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/blog" onClick={closeMenu}>Blog</Link>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/blog" onClick={closeMenu}>Blog</Link>
               </li>
               <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/news" onClick={closeMenu}>News</Link>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/news" onClick={closeMenu}>News</Link>
               </li>
               <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/about" onClick={closeMenu}>About</Link>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/about" onClick={closeMenu}>About</Link>
               </li>
             </ul>
           </div>
@@ -100,21 +100,21 @@ export default function Navbar() {
           <div className="d-flex align-items-center">
             <ul className="navbar-nav me-auto d-flex flex-row gap-3">
               <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/">Home</Link>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/">Home</Link>
               </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/beats">
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/beats">
                     <i className="bi bi-music-note-beamed me-1"></i>Beats
                   </Link>
                 </li>
               <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/blog">Blog</Link>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/blog">Blog</Link>
               </li>
               <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/news">News</Link>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/news">News</Link>
               </li>
               <li className="nav-item">
-                  <Link className="nav-link text-dark" to="/about">About</Link>
+                  <Link className="nav-link" style={{ color: 'var(--text-color)' }} to="/about">About</Link>
               </li>
             </ul>
             {/* Theme Toggle Button for Desktop */}
