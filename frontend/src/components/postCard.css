@@ -14,9 +14,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.255)69, 69)86841;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.2s;
 }
@@ -42,15 +43,15 @@
   margin: 5px 0;
   overflow: hidden;
   white-space: nowrap;
-  color: #fff;
+  color: var(--card-text);
   text-overflow: ellipsis;  /* truncate long titles */
 }
 
 .post-category {
   display: inline-block;
   padding: 2px 6px;
-  background-color: #17a2b8;
-  color: #fff;
+  background-color: var(--accent-color);
+  color: var(--text-color);
   border-radius: 4px;
   font-size: 0.75rem;
 }

@@ -2,9 +2,10 @@
 .content-card {
   transform-style: preserve-3d;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
@@ -104,22 +105,22 @@
 
 /* Admin Dashboard Enhancements */
 .admin-featured-section {
-  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  background: var(--card-bg);
   border-radius: 20px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0,0,0,0.1),
     inset 0 0 0 1px rgba(255,255,255,0.5);
 }
 
 .upload-zone {
-  border: 2px dashed rgba(0,0,0,0.1);
+  border: 2px dashed var(--border-color);
   border-radius: 16px;
   padding: 2rem;
   text-align: center;
   transition: all 0.3s ease;
-  background: linear-gradient(145deg, #ffffff, #f8f8f8);
+  background: var(--card-bg);
 }
 
 .upload-zone:hover {

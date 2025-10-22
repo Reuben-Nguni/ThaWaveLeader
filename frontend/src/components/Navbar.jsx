@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useTheme } from "../context/ThemeContext";
 import logo from "../assets/logo.jpg";
 
 export default function Navbar() {
+  const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
 
@@ -36,15 +38,26 @@ export default function Navbar() {
 
         {/* Toggle Button for Mobile */}
         {isMobile && (
-          <button
-            className="navbar-toggler p-1"
-            type="button"
-            onClick={toggleMenu}
-            aria-label="Toggle navigation"
-            style={{ fontSize: "0.9rem" }}
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          <div className="d-flex align-items-center">
+            {/* Theme Toggle Button for Mobile */}
+            <button
+              className="btn btn-outline-secondary me-2"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              style={{ fontSize: "0.9rem" }}
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
+            <button
+              className="navbar-toggler p-1"
+              type="button"
+              onClick={toggleMenu}
+              aria-label="Toggle navigation"
+              style={{ fontSize: "0.9rem" }}
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+          </div>
         )}
       </div>
 
@@ -84,25 +97,36 @@ export default function Navbar() {
       ) : (
         // Horizontal menu for large screens
         <div className="container-fluid">
-          <ul className="navbar-nav ms-auto d-flex flex-row gap-3">
-            <li className="nav-item">
-                <Link className="nav-link text-dark" to="/">Home</Link>
-            </li>
+          <div className="d-flex align-items-center">
+            <ul className="navbar-nav me-auto d-flex flex-row gap-3">
               <li className="nav-item">
-                <Link className="nav-link text-dark" to="/beats">
-                  <i className="bi bi-music-note-beamed me-1"></i>Beats
-                </Link>
+                  <Link className="nav-link text-dark" to="/">Home</Link>
               </li>
-            <li className="nav-item">
-                <Link className="nav-link text-dark" to="/blog">Blog</Link>
-            </li>
-            <li className="nav-item">
-                <Link className="nav-link text-dark" to="/news">News</Link>
-            </li>
-            <li className="nav-item">
-                <Link className="nav-link text-dark" to="/about">About</Link>
-            </li>
-          </ul>
+                <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/beats">
+                    <i className="bi bi-music-note-beamed me-1"></i>Beats
+                  </Link>
+                </li>
+              <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/blog">Blog</Link>
+              </li>
+              <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/news">News</Link>
+              </li>
+              <li className="nav-item">
+                  <Link className="nav-link text-dark" to="/about">About</Link>
+              </li>
+            </ul>
+            {/* Theme Toggle Button for Desktop */}
+            <button
+              className="btn btn-outline-secondary ms-3"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              style={{ fontSize: "0.9rem" }}
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
+          </div>
         </div>
       )}
     </nav>

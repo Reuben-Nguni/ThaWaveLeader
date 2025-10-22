@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Loading from "./components/Loading";
 import Home from "./pages/Home";
@@ -14,26 +15,28 @@ import PostDetail from "./pages/PostDetail";
 
 function App() {
   return (
-    <Router>
-      <Loading />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/blog" element={<Blog />} />
-  <Route path="/beats" element={<Beats />} />
-  <Route path="/videos" element={<Videos />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/post/:id" element={<PostDetail />} />
+    <ThemeProvider>
+      <Router>
+        <Loading />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
+    <Route path="/beats" element={<Beats />} />
+    <Route path="/videos" element={<Videos />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/post/:id" element={<PostDetail />} />
 
-        {/* Hidden admin routes */}
-        <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          {/* Hidden admin routes */}
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
 
-        {/* Optional: catch-all 404 */}
-        <Route path="*" element={<p>Page not found</p>} />
-      </Routes>
-    </Router>
+          {/* Optional: catch-all 404 */}
+          <Route path="*" element={<p>Page not found</p>} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -26,7 +26,8 @@
 }
 
 .card.bg-gradient {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: var(--card-bg);
+  color: var(--text-color);
 }
 
 /* WhatsApp buttons hover effect */

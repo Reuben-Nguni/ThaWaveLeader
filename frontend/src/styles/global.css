@@ -1,9 +1,30 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #222222;
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+  --card-bg: #ffffff;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --card-text: #4a4a4a;
+  --card-title: #2d2d2d;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --navbar-bg: rgba(18, 18, 18, 0.95);
+  --card-bg: #1e1e1e;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --card-text: #cccccc;
+  --card-title: #ffffff;
+}
+
 body {
   font-family: Arial, sans-serif;
-  background-color: #ffffff;
+  background-color: var(--bg-color);
   padding-top: 80px;
   line-height: 1.6;
-  color: #222222;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Responsive adjustments */

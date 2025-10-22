@@ -1,10 +1,11 @@
 .content-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   transform-style: preserve-3d;
   perspective: 1000px;
-  box-shadow: 
+  box-shadow:
     0 5px 15px rgba(0, 0, 0, 0.1),
     0 3px 6px rgba(0, 0, 0, 0.05);
 }
@@ -32,11 +33,11 @@
 }
 
 .audio-player {
-  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 1rem;
   margin: 1rem 0;
-  box-shadow: 
+  box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.2),
     inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
@@ -47,12 +48,12 @@
 }
 
 .upload-zone {
-  border: 2px dashed rgba(100, 17, 203, 0.2);
+  border: 2px dashed var(--border-color);
   border-radius: 16px;
   padding: 2rem;
   text-align: center;
   transition: all 0.3s ease;
-  background: linear-gradient(145deg, #ffffff, #f8f8f8);
+  background: var(--card-bg);
   cursor: pointer;
 }
 
@@ -129,7 +130,7 @@
 audio {
   width: 100%;
   height: 40px;
-  background: #2a2a2a;
+  background: var(--card-bg);
   border-radius: 8px;
   outline: none;
 }

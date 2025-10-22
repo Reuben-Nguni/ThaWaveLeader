@@ -78,17 +78,17 @@
 
 /* Featured Release Admin Section */
 .featured-release-admin {
-  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  background: var(--card-bg);
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .featured-release-preview {
-  border: 2px solid rgba(100,17,203,0.1);
+  border: 2px solid var(--border-color);
   border-radius: 16px;
   padding: 1.5rem;
-  background: white;
+  background: var(--card-bg);
   transition: all 0.3s ease;
 }
 

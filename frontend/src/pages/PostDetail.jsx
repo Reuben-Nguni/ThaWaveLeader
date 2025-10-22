@@ -227,7 +227,7 @@ export default function PostDetail() {
               </div>
             </div>
 
-            <div className="mb-4" style={{ lineHeight: 1.8, fontSize: "1.1rem", color: "#333" }}>
+            <div className="mb-4" style={{ lineHeight: 1.8, fontSize: "1.1rem", color: "var(--text-color)" }}>
               <p>{post.content}</p>
             </div>
 
@@ -250,7 +250,7 @@ export default function PostDetail() {
             {/* Related Posts or Author Bio could be added here */}
             <div className="mt-5 pt-4 border-top">
               <p className="text-muted small">
-                If you enjoyed this post, share it with your friends and stay tuned for more updates from New Generation Music!
+                If you enjoyed this post, share it with your friends and stay tuned for more updates!
               </p>
             </div>
           </div>

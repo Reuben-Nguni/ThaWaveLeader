@@ -1,6 +1,6 @@
 .admin-dashboard {
     min-height: 100vh;
-    background-color: #121212;
+    background-color: var(--bg-color);
 }
 
 .bg-gradient {
@@ -8,18 +8,18 @@
 }
 
 .card {
-    background: #1e1e1e !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
 }
 
 .card-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .form-control {
-    background-color: #2a2a2a !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
 }
 
 .form-control:focus {
@@ -33,9 +33,9 @@
 }
 
 .form-select {
-    background-color: #2a2a2a !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
 }
 
 .form-select:focus {
@@ -65,18 +65,19 @@
 .alert-info {
     background-color: rgba(37, 117, 252, 0.1);
     border-color: rgba(37, 117, 252, 0.2);
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 .text-muted {
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: var(--text-color) !important;
+    opacity: 0.6;
 }
 
 /* Dropzone styling */
 div[role="presentation"] {
-    background-color: #2a2a2a !important;
-    border: 2px dashed rgba(255, 255, 255, 0.2) !important;
-    color: #ffffff !important;
+    background-color: var(--card-bg) !important;
+    border: 2px dashed var(--border-color) !important;
+    color: var(--text-color) !important;
 }
 
 div[role="presentation"]:hover {
@@ -85,6 +86,6 @@ div[role="presentation"]:hover {
 
 /* Media preview containers */
 audio, video {
-    background-color: #2a2a2a;
+    background-color: var(--card-bg);
     border-radius: 8px;
 }

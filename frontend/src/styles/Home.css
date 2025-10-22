@@ -1,7 +1,7 @@
-/* Light theme styles */
+/* Theme-aware styles */
 body {
-  background-color: #ffffff;
-  color: #333333;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .hero-banner {
@@ -40,17 +40,17 @@ body {
 }
 
 .content-card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 0.75rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Soft cream colored cards with gentle text */
 .colorful-card {
-  background: #fff9f0;  /* Soft cream background */
-  color: #4a4a4a;      /* Softer than pure black */
-  border: 1px solid #e8e0d5;  /* Cream colored border */
+  background: var(--card-bg);  /* Theme-aware background */
+  color: var(--card-text);      /* Theme-aware text color */
+  border: 1px solid var(--border-color);  /* Theme-aware border */
   border-radius: 8px;
   margin-bottom: 20px;
   box-shadow: none;
@@ -61,18 +61,18 @@ body {
 
 .colorful-card .card-body {
   padding: 1rem;
-  color: #4a4a4a;
+  color: var(--card-text);
 }
 
 .colorful-card .card-title {
-  color: #2d2d2d !important;  /* Slightly softer black for titles */
+  color: var(--card-title) !important;
   font-weight: 600;
   font-size: 1.1rem;
   margin-bottom: 0.75rem;
 }
 
 .colorful-card .card-text {
-  color: #4a4a4a !important;  /* Gentle gray for better readability */
+  color: var(--card-text) !important;
   font-size: 0.95rem;
   line-height: 1.6;
 }
@@ -85,9 +85,9 @@ body {
 
 /* Soft badges to match card theme */
 .colorful-card .badge {
-  background: #fff5e6;
-  color: #664d33;
-  border: 1px solid #e8e0d5;
+  background: var(--card-bg);
+  color: var(--card-text);
+  border: 1px solid var(--border-color);
   font-weight: normal;
 }
 
@@ -97,7 +97,7 @@ body {
   .container, .container-fluid {
     padding: 15px;
   }
-  
+
   .row {
     display: block !important;
     margin: 0 !important;
@@ -124,7 +124,7 @@ body {
     transform: none !important;
     box-shadow: none !important;
     border: 1px solid #dee2e6 !important;
-    background: white !important;
+    background: var(--card-bg) !important;
     z-index: 1 !important;
   }
 
@@ -154,7 +154,7 @@ body {
 }
 
 .section-title {
-  color: #333333;
+  color: var(--text-color);
   font-weight: 700;
   position: relative;
   display: inline-block;
@@ -229,8 +229,8 @@ body {
 }
 
 .category-card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 1rem;
   padding: 2rem;
   text-align: center;
@@ -252,12 +252,12 @@ body {
 }
 
 .navbar {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: var(--navbar-bg) !important;
   backdrop-filter: blur(10px);
 }
 
 .navbar .nav-link {
-  color: #333333 !important;
+  color: var(--text-color) !important;
   font-weight: 500;
   transition: color 0.3s ease;
 }
@@ -272,13 +272,13 @@ body {
 
 /* Add more specific text color overrides */
 .text-dark {
-  color: #333333 !important;
+  color: var(--text-color) !important;
 }
 
 .card-title {
-  color: #333333 !important;
+  color: var(--card-title) !important;
 }
 
 .card-text {
-  color: #666666 !important;
+  color: var(--card-text) !important;
 }

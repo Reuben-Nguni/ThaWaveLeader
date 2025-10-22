@@ -58,7 +58,7 @@ export default function Blog() {
         <div className="text-center mb-5">
           <h2 className="fw-bold display-6">📝 Blog</h2>
           <p className="lead text-muted">
-            Explore stories, insights, and updates from the New Generation community.
+            Explore stories, insights, and updates from the community.
           </p>
           <hr className="w-25 mx-auto" />
         </div>
