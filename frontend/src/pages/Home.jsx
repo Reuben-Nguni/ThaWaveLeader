@@ -47,9 +47,15 @@ export default function Home() {
               <p className="lead mb-4 text-white modern-text fw-bold">
                 Experience the future of sound production. Premium beats, music, and visual content for the next generation.
               </p>
-            <div className="d-flex gap-4 justify-content-center">
-              <Link to="/beats" className="btn btn-primary btn-lg px-5 py-3">Explore Beats</Link>
-              <Link to="/videos" className="btn btn-primary btn-lg px-5 py-3">Watch Videos</Link>
+            <div className="d-flex gap-4 justify-content-center flex-wrap">
+              <Link to="/beats" className="btn btn-primary btn-lg px-3 px-md-5 py-3">
+                <i className="bi bi-music-note-beamed me-1 d-md-none"></i>
+                <span className="d-none d-md-inline">Explore </span>Beats
+              </Link>
+              <Link to="/videos" className="btn btn-primary btn-lg px-3 px-md-5 py-3">
+                <i className="bi bi-camera-video me-1 d-md-none"></i>
+                <span className="d-none d-md-inline">Watch </span>Videos
+              </Link>
             </div>
             {/* (small inline logo removed) */}
           </div>

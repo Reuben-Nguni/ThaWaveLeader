@@ -18,7 +18,7 @@ export default function Navbar() {
   }, []);
 
   return (
-      <nav className="navbar navbar-expand-lg shadow-sm fixed-top" style={{ backgroundColor: 'var(--navbar-bg)' }}>
+      <nav className="navbar navbar-expand-lg shadow-sm fixed-top py-1 py-md-2" style={{ backgroundColor: 'var(--navbar-bg)' }}>
         <div className="container-fluid d-flex justify-content-between align-items-center px-3">
           {/* Brand */}
           <Link to="/" className="navbar-brand d-flex align-items-center" onClick={closeMenu}>
@@ -41,10 +41,10 @@ export default function Navbar() {
           <div className="d-flex align-items-center">
             {/* Theme Toggle Button for Mobile */}
             <button
-              className="btn btn-outline-secondary me-2"
+              className="btn btn-outline-secondary me-2 py-1"
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              style={{ fontSize: "0.9rem" }}
+              style={{ fontSize: "0.8rem" }}
             >
               {theme === 'light' ? '🌙' : '☀️'}
             </button>
